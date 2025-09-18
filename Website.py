@@ -9,7 +9,7 @@ st.title("Bank Churners Analysis")
 st.sidebar.header("Navigation")
 st.sidebar.markdown("Created by [Omar Zahran](https://www.linkedin.com/in/omarzahran22/)")
 
-# ---------------- Load Data ----------------
+#Load Data 
 @st.cache_data
 def load_data():
     data = pd.read_csv("BankChurners.csv")
@@ -27,10 +27,10 @@ def load_data():
 
 data = load_data()
 
-# ---------------- Sidebar Navigation ----------------
+#Sidebar Navigation
 option = st.sidebar.radio("Go to:", ["Data Overview", "EDA & Visualization"])
 
-# ---------------- DATA OVERVIEW ----------------
+# DATA OVERVIEW 
 if option == "Data Overview":
     st.subheader(" Data Overview")
     st.write(data.head())
@@ -38,17 +38,17 @@ if option == "Data Overview":
     st.write("Summary Statistics:")
     st.write(data.describe())
 
-# ---------------- EDA & VISUALIZATION ----------------
+# --EDA & VISUALIZATION 
 elif option == "EDA & Visualization":
     st.subheader("Exploratory Data Analysis & Visualizations")
 
-    # ---------------- Pie Chart - Gender ----------------
+    # -- Pie Chart - Gender
     st.write("### Distribution of Customers by Gender")
     fig = px.pie(data, names='Gender', title="Gender Distribution",
                  color='Gender', color_discrete_map={'F':'darkorange','M':'darkblue'})
     st.plotly_chart(fig, use_container_width=True)
 
-    # ---------------- Bar Chart - Education Level ----------------
+    # --Bar Chart - Education Level 
     st.write("### Number of Customers by Education Level")
     edu_counts = data['Education_Level'].value_counts().reset_index()
     edu_counts.columns = ['Education_Level','Count']
@@ -57,7 +57,7 @@ elif option == "EDA & Visualization":
                  color='Count', color_continuous_scale='Viridis')
     st.plotly_chart(fig, use_container_width=True)
 
-    # ---------------- Bar Chart - Marital Status ----------------
+    # -- Bar Chart - Marital Status 
     st.write("### Number of Customers by Marital Status")
     marital_counts = data['Marital_Status'].value_counts().reset_index()
     marital_counts.columns = ['Marital_Status','Count']
@@ -66,7 +66,7 @@ elif option == "EDA & Visualization":
                  color='Count', color_continuous_scale='Cividis')
     st.plotly_chart(fig, use_container_width=True)
 
-    # ---------------- Bar Chart - Income Category ----------------
+    # -- Bar Chart - Income Category 
     st.write("### Number of Customers by Income Category")
     income_counts = data['Income_Category'].value_counts().reset_index()
     income_counts.columns = ['Income_Category','Count']
@@ -75,7 +75,7 @@ elif option == "EDA & Visualization":
                  color='Count', color_continuous_scale='Blues')
     st.plotly_chart(fig, use_container_width=True)
 
-    # ---------------- Bar Chart - Card Category ----------------
+    # Bar Chart - Card Category 
     st.write("### Number of Customers by Card Category")
     card_counts = data['Card_Category'].value_counts().reset_index()
     card_counts.columns = ['Card_Category','Count']
@@ -84,7 +84,7 @@ elif option == "EDA & Visualization":
                  color='Count', color_continuous_scale='Greens')
     st.plotly_chart(fig, use_container_width=True)
 
-    # ---------------- Histograms - Numeric Columns ----------------
+    # Histograms - Numeric Columns 
     st.write("### Distribution of Numeric Columns")
     numeric_cols = ['Customer_Age', 'Credit_Limit', 'Total_Trans_Amt', 'Total_Trans_Ct']
     for col in numeric_cols:
@@ -92,26 +92,26 @@ elif option == "EDA & Visualization":
                            color_discrete_sequence=['skyblue'])
         st.plotly_chart(fig, use_container_width=True)
 
-    # ---------------- Pie Chart - Attrition ----------------
+    # --- Pie Chart - Attrition
     st.write("### Customer Attrition Distribution")
     fig = px.pie(data, names='Attrition_Flag', color='Attrition_Flag', 
                  color_discrete_map={'Existing Customer':'darkgreen','Attrited Customer':'red'})
     st.plotly_chart(fig, use_container_width=True)
 
-    # ---------------- Attrition by Gender ----------------
+    # - Attrition by Gender
     st.write("### Attrition by Gender")
     fig = px.histogram(data, x='Gender', color='Attrition_Flag', barmode='group',
                        color_discrete_map={'Existing Customer':'darkgreen','Attrited Customer':'red'})
     st.plotly_chart(fig, use_container_width=True)
 
-    # ---------------- Correlation Heatmap ----------------
+    # Correlation Heatmap 
     st.write("### Correlation Heatmap")
     corr = data[['Customer_Age', 'Credit_Limit', 'Total_Trans_Amt', 'Total_Trans_Ct',
                  'Avg_Open_To_Buy','Inactive_Months']].corr()
     fig = px.imshow(corr, text_auto=True, color_continuous_scale='RdBu')
     st.plotly_chart(fig, use_container_width=True)
 
-    # ---------------- Boxplots ----------------
+    # Boxplots 
     st.write("### Boxplots: Inactive Months, Avg Open To Buy, Avg Utilization Ratio by Attrition")
     numeric = ['Inactive_Months', 'Avg_Open_To_Buy', 'Avg_Utilization_Ratio']
     for col in numeric:
@@ -119,11 +119,12 @@ elif option == "EDA & Visualization":
                      color_discrete_map={'Existing Customer':'darkgreen','Attrited Customer':'red'})
         st.plotly_chart(fig, use_container_width=True)
 
-    # ---------------- Boxplots - Age, Transaction Count, Spending ----------------
+    #Boxplots - Age, Transaction Count, Spending 
     st.write("### Customer Age, Transaction Count, and Spending by Attrition Status")
     cols = ['Customer_Age', 'Total_Trans_Ct', 'Total_Trans_Amt']
     for col in cols:
         fig = px.box(data, x='Attrition_Flag', y=col, color='Attrition_Flag',
                      color_discrete_map={'Existing Customer':'darkgreen','Attrited Customer':'red'})
         st.plotly_chart(fig, use_container_width=True)
+
 
