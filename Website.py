@@ -12,7 +12,7 @@ st.sidebar.markdown("Created by [Omar Zahran](https://www.linkedin.com/in/omarza
 # ---------------- Load Data ----------------
 @st.cache_data
 def load_data():
-    data = pd.read_csv(r"D:\Power Bi @ITI\Python Visualization\Project\BankChurners.csv")
+    data = pd.read_csv("BankChurners.csv")
     data = data.drop([
         "Naive_Bayes_Classifier_Attrition_Flag_Card_Category_Contacts_Count_12_mon_Dependent_count_Education_Level_Months_Inactive_12_mon_1",
         "Naive_Bayes_Classifier_Attrition_Flag_Card_Category_Contacts_Count_12_mon_Dependent_count_Education_Level_Months_Inactive_12_mon_2"
@@ -126,3 +126,4 @@ elif option == "EDA & Visualization":
         fig = px.box(data, x='Attrition_Flag', y=col, color='Attrition_Flag',
                      color_discrete_map={'Existing Customer':'darkgreen','Attrited Customer':'red'})
         st.plotly_chart(fig, use_container_width=True)
+
